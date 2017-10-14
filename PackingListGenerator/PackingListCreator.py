@@ -4,34 +4,6 @@ some initial questions.
 import pandas as pd
 import sqlite3
 
-# Instantiate the packing list data frame
-packing_list = pd.DataFrame(columns=['Item', 'Qty', 'Selected'])
-
-# Alternatively, use an SQLite database for the packing list
-# pack_list = sqlite3.connect('~/Dropbox/111PackingLists/packlist.db')
-pack_list = sqlite3.connect(':memory:')
-cursor = pack_list.cursor()
-cursor.execute('CREATE TABLE PackingList (Item text, Qty integer, Selected text')
-cursor.execute("INSERT INTO PackingList VALUES ('shirts', 1, 'True')")
-
-# You must commit after any actions/entries or they won't be saved.
-pack_list.commit()
-# Don't forget to close database when done.
-# pack_list.close()
-
-
-# TODO - Create packing list item class
-#class Item():
-#    def __init__(self, name='Unnamed Item', qty=1):
-#        self.name = name
-#        self.qty = qty
-#        # self.weight = 0
-#
-#    def __str__(self):
-#        return '%.*w%.4s%.1d' % (self.name, '    ', self.qty)
-#
-#    pass
-
 
 # TODO - Create initial questions list
 # Gather initial info with questions
@@ -97,7 +69,8 @@ else: print('You did not enter a drive/flight time\n')
 print('Is this an international trip?')
 intl_trip = input()
 
-# TODO - Print a trip summary to the screen
+# Print a trip summary to the screen
+print('========== TRIP SUMMARY ==========', end='\n')
 print('Trip Purpose: ', trip_purpose, end='\n')
 print('Number of Days: ', nbr_days, end='\n')
 print('Number of Nights: ', nbr_nights, end='\n')
@@ -121,16 +94,23 @@ print('International trip? ', intl_trip, end='\n')
 
 # TODO - Instantiate the standard list items
 
+# Instantiate the packing list data frame
+packing_list = pd.DataFrame(columns=['Item', 'Qty', 'Selected'])
+
+# Alternatively, use an SQLite database for the packing list
+# pack_list = sqlite3.connect('~/Dropbox/111PackingLists/packlist.db')
+pack_list = sqlite3.connect(':memory:')
+cursor = pack_list.cursor()
+cursor.execute('CREATE TABLE PackingList (Item text, Qty integer, Selected text')
+cursor.execute("INSERT INTO PackingList VALUES ('shirts', 1, 'True')")
+
+# You must commit after any actions/entries or they won't be saved.
+pack_list.commit()
+# Don't forget to close database when done.
+# pack_list.close()
+
 # TODO - "Calculate" and select items based on the answers to the questions.
 # To select items, instantiate them and update their quantity.
-
-
-# TODO - Instantiate the list items
-
-
-
-# TODO - Generate the packing list
-
 
 
 
