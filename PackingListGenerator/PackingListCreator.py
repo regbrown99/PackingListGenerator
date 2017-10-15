@@ -92,25 +92,22 @@ print('Drive time: ', drive_time, end='\n')
 print('International trip? ', intl_trip, end='\n')
 
 
-# TODO - Instantiate the standard list items
+# TODO - Instantiate the standard packing list dataframe from csv file
+data_types = ['text','int','bool','text','text','real','text','text']
+packing_list = pd.read_csv('''/Users/RAB-Capital/Dropbox/111PackingLists
+                            /StandardOneBagPackingList.csv''')
 
-# Instantiate the packing list data frame
-packing_list = pd.DataFrame(columns=['Item', 'Qty', 'Selected'])
+# TODO - Set item names as index for the dataframe (use .set_index, inplace=True?)
+packing_list.set_index('Item', inplace=True)
 
-# Alternatively, use an SQLite database for the packing list
-# pack_list = sqlite3.connect('~/Dropbox/111PackingLists/packlist.db')
-pack_list = sqlite3.connect(':memory:')
-cursor = pack_list.cursor()
-cursor.execute('CREATE TABLE PackingList (Item text, Qty integer, Selected text')
-cursor.execute("INSERT INTO PackingList VALUES ('shirts', 1, 'True')")
+# TODO - Set the data types for the columns
+# Ignore dtypes for now. This may not even be necessary at all.
 
-# You must commit after any actions/entries or they won't be saved.
-pack_list.commit()
-# Don't forget to close database when done.
-# pack_list.close()
+# TODO - Learn how to update data in a dataframe.
+# use df.loc[index, column]
 
 # TODO - "Calculate" and select items based on the answers to the questions.
-# To select items, instantiate them and update their quantity.
+
 
 
 
