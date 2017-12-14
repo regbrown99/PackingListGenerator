@@ -1,4 +1,4 @@
-""" THis program generates a packing list after asking
+""" This program generates a packing list after asking
 some initial questions.
 Author: Reggie Brown
 Date: November 2016
