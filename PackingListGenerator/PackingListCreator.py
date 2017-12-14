@@ -4,6 +4,7 @@ Author: Reggie Brown
 Date: November 2016
 """
 import pandas as pd
+import os
 
 
 # TODO - Create initial questions list
@@ -120,17 +121,18 @@ def questionnaire():
             "International Trip": intl_trip}
 
 
-def generatePackList(nbrDays, temp):
+def generatePackList(tripName, nbrDays, temp):
     """ This function "Calculates" and selects items based on the answers
     to the questionnaire function."""
 
     # Store standard packing list file location in a variable so it can be changed if desired.
+    path = '/Users/RAB-Capital/Dropbox/111PackingLists/'
     standardPackingListFile = '''/Users/RAB-Capital/Dropbox/111PackingLists
                                 /StandardOneBagPackingList.csv'''
     # Instantiate the standard packing list datafrome from csv file
-    packing_list = pd.read_csv(standardPackingListFile)
+    packingListdf = pd.read_csv(standardPackingListFile)
     # Set item names as index for the dataframe
-    packing_list.set_index('Item', inplace=True)
+    packingListdf.set_index('Item', inplace=True)
     # Ignore data types (dtypes) for the columns for now. May not be necessary at all.
     # To update the dataframe values, use df.loc[index, column]
 
@@ -147,16 +149,17 @@ def generatePackList(nbrDays, temp):
     # One pair of bottoms for every two days, up to 3 max
     if temp == 'Warm':
         if nbrDays <= 5:
-            bottoms['shorts'] = round(nbrDays/2, 0)
+            bottoms['shorts'] = ((nbrDays // 2) + (nbrDays % 2)) # rounds up for odd nbr of days
         else:
             bottoms['shorts'] = 3
     if temp == 'Cold':
         if nbrDays <= 5:
-            bottoms['pants'] = round(nbrDays/2, 0)
+            bottoms['pants'] = ((nbrDays // 2) + (nbrDays % 2)) # rounds up for odd nbr of days
         else:
             bottoms['pants'] = 3
 
     # Save generated packing list as a new csv file.
+    packingListdf.to_csv(path + tripName + '.csv')
 
 # TODO - Export the packing list to csv, text file, Excel, or Evernote
 def outputPackingList(tripName, generatedPackList):
@@ -164,4 +167,4 @@ def outputPackingList(tripName, generatedPackList):
     packing_list = pd.read_csv(generatedPackList)
     packList.write('     Qty     Item\n')
     packList.write('[ ]  ' + '     ' + packing_list.loc[1, 1] + '     ' + packing_list.loc[1, 2])
-    
+
