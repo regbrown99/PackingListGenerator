@@ -1,3 +1,4 @@
+
 # packListQuestionnaire.py - Questionnaire function for packingListGenerator
 
 def questionnaire():
@@ -34,12 +35,10 @@ def questionnaire():
     nbr_nights = input()
 
     # Weather
-    print('What is the temperature forecast for daytime? (hot, warm, cold, cool)')
+    print('What is the temperature forecast for daytime? (hot, warm, cool, or cold)')
     daytime_temp = input()
-    daytime_temp = str2bool(daytime_temp)
-    print('What is the temperature forecast for night/evenings? (hot, warm, cold, cool')
+    print('What is the temperature forecast for night/evenings? (hot, warm, cool, or cold)')
     night_temp = input()
-    night_temp = str2bool(night_temp)
     print('Will it be sunny? (y or n)')
     sunny = input()
     sunny = str2bool(sunny)
@@ -96,7 +95,7 @@ def questionnaire():
         print('How long is your drive? (in hours)')
         drive_time = input()
     else:
-        print('You did not enter a drive/flight time\n')
+        print('You did not enter a drive/flight time.\n')
 
     print('Is this an international trip?')
     intl_trip = input()
@@ -104,27 +103,27 @@ def questionnaire():
 
     # Print a trip summary to the screen
     # This is optional
-    print('========== TRIP SUMMARY ==========', end='\n')
-    print('Trip Name: ' + tripname, end='\n')
-    print('Trip Purpose: ' + purpose, end='\n')
-    print('Number of Days: ' + nbr_days, end='\n')
-    print('Number of Nights: ' + nbr_nights, end='\n')
-    print('Daytime Temperature: ' + daytime_temp, end='\n')
-    print('Night time Temperature: ' + night_temp, end='\n')
-    print('Sunny? ' + sunny, end='\n')
-    print('Rainy? ' + rain, end='\n')
-    print('Snow? ' + snow, end='\n')
-    print('Swim? ' + swim, end='\n')
-    print('Suit? ' + suit, end='\n')
-    print('Number of suits: ' + nbr_suits, end='\n')
-    print('Go-out night(s)? ' + go_out_night, end='\n')
-    print('How many go-out nights? ' + nbr_go_out_nights, end='\n')
-    print('Shopping? ' + shopping, end='\n')
-    print('Bring DSLR? ' + dslr, end='\n')
-    print('Travel mode: ' + transport_mode, end='\n')
-    print('Flight time: ' + flight_time, end='\n')
-    print('Drive time: ' + drive_time, end='\n')
-    print('International trip? ' + intl_trip, end='\n')
+    print('TRIP SUMMARY')
+    print('Trip Name: ' + tripname)
+    print('Trip Purpose: ' + purpose)
+    print('Number of Days: ' + nbr_days)
+    print('Number of Nights: ' + nbr_nights)
+    print('Daytime Temperature: ' + daytime_temp)
+    print('Night time Temperature: ' + night_temp)
+    print('Sunny? ' + str(sunny))
+    print('Rainy? ' + str(rain))
+    print('Snow? ' + str(snow))
+    print('Swim? ' + str(swim))
+    print('Suit? ' + str(suit))
+    print('Number of suits: ' + str(nbr_suits))
+    print('Go-out night(s)? ' + str(go_out_night))
+    print('How many go-out nights? ' + str(nbr_go_out_nights))
+    print('Shopping? ' + str(shopping))
+    print('Bring DSLR? ' + str(dslr))
+    print('Travel mode: ' + transport_mode)
+    print('Flight time: ' + str(flight_time))
+    print('Drive time: ' + str(drive_time))
+    print('International trip? ' + str(intl_trip))
 
     # Return these values as a dictionary instead of a tuple because
     # a dictionary allows me to look up the values with a suitable keyword.
@@ -141,3 +140,9 @@ def questionnaire():
             "Transportation Mode": transport_mode,
             "Flight Time": flight_time, "Drive Time": drive_time,
             "International Trip": intl_trip}
+
+if __name__ == '__main__':
+    print('Executing as ' + __name__)
+    questionnaire()
+    print(questionnaire())
+    
