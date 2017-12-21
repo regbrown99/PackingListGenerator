@@ -65,6 +65,30 @@ def getWeather(zip_code, city, country):
     # print(w[2]['weather'][0]['main'], '-', w[2]['weather'][0]['description'])
     # *****END CODE FROM ATBS*****
     
+    # TODO: test ATBS code using python3 instead of 2
+    
+    # TODO: return weather data as a dictionary that can be passed to temperatureMapping
+    
+def temperatureMapping(temperature):
+        """This function takes a temperature and maps it to my own temperature description.
+        Input: temperature
+        Output: a verbal description of temperature based on the number that was input."""
+        if temperature >= 95:
+            tempDescription = 'Really Hot'
+        elif temperature >= 85:
+            tempDescription = 'Hot'
+        elif temperature >= 75:
+            tempDescription = 'Warm'
+        elif temperature >= 65:
+            tempDescription = 'Cool'
+        elif tempDescription >= 55:
+            tempDescription = 'Chilly'
+        elif tempDescription >= 45:
+            tempDescription = 'Cold'
+        else:
+            tempDescription = 'Really Cold'
+        return tempDescription
+
 if __name__ == '__main__':
     zip_code = 77494
     city = 'Katy'

@@ -23,35 +23,6 @@ def generatePackList(path, standardPackingListFile, standardPackListSheet, tripP
             a dictionary of values used to generate the packing list
     Output: a text file with the generated packing list in a readable format with filename=tripname"""
 
-    # Instantiate the standard packing list datafrome from csv file
-    dfpackingList = pd.read_excel(standardPackingListFile, sheet_name=standardPackListSheet)
-        # usecols=['Item', 'Qty', 'Completed'])
-
-    # Set item names as index for the dataframe
-    dfpackingList = dfpackingList.set_index('Item')
-
-    # Ignore data types (dtypes) for the columns for now. May not be necessary at all.
-    # To update the dataframe values, use df.loc[index, column]
-    
-    defTemperatureMapping(temperature):
-        """This function takes a temperature and maps it to my own temperature description.
-        Input: temperature
-        Output: a verbal description of temperature based on the number that was input."""
-        if temperature >= 95:
-            tempDescription = 'Really Hot'
-        elif temperature >= 85:
-            tempDescription = 'Hot'
-        elif temperature >= 75:
-            tempDescription = 'Warm'
-        elif temperature >= 65:
-            tempDescription = 'Cool'
-        elif tempDescription >= 55:
-            tempDescription = 'Chilly'
-        elif tempDescription >= 45:
-            tempDescription = 'Cold'
-        else:
-            tempDescription = 'Really Cold'
-        return tempDescription
         
     nbrDays = tripProfileDict['Nbr of Days']
     
@@ -221,17 +192,34 @@ def generatePackList(path, standardPackingListFile, standardPackListSheet, tripP
         else:
             dfpackingList.loc['pants', 'Qty'] = 3
 
-    # Save generated packing list as a new Excel file.
-    dfpackingList.to_excel(path + tripProfileDict['Trip Name'] + 'xlsx')
-    # dfpackingList.to_csv(path + tripProfileDict['Trip Name'] + '.csv')
+    def updateDataFrame():
+        """ This function retrieves the standard packing list and updates it based on the return values of the
+        select items set of functions. It then saves the new DataFrame to file with the trip name from
+        the questionnaire function."""
+        # Instantiate the standard packing list datafrome from csv file
+        dfpackingList = pd.read_excel(standardPackingListFile, sheet_name=standardPackListSheet)
+        # usecols=['Item', 'Qty', 'Completed'])
 
+        # Set item names as index for the dataframe
+        dfpackingList = dfpackingList.set_index('Item')
 
-# TODO - Export the packing list to csv, text file, Excel, or Evernote
-def outputPackingList(tripName, generatedPackList):
-    packList = open(tripName + '.txt', 'w')
-    packing_list = pd.read_csv(generatedPackList)
-    packList.write('     Qty     Item\n')
-    packList.write('[ ]  ' + '     ' + packing_list.loc[1, 1] + '     ' + packing_list.loc[1, 2])
+        # Ignore data types (dtypes) for the columns for now. May not be necessary at all.
+        # To update the dataframe values, use df.loc[index, column]
+        
+        # TODO - Export the packing list to csv, text file, Excel, or Evernote
+        def outputPackingList(tripName, generatedPackList):
+            packList = open(tripName + '.txt', 'w')
+            packing_list = pd.read_csv(generatedPackList)
+            packList.write('     Qty     Item\n')
+            packList.write('[ ]  ' + '     ' + packing_list.loc[1, 1] + '     ' + packing_list.loc[1, 2])
+    
+            pass
+
+        # Save generated packing list as a new Excel file.
+        dfpackingList.to_excel(path + tripProfileDict['Trip Name'] + 'xlsx')
+        # dfpackingList.to_csv(path + tripProfileDict['Trip Name'] + '.csv')
+
+    pass
 
 if __name__ == '__main__':
     print('Executing as ' + __name__)
