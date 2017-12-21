@@ -2,21 +2,21 @@
 import pandas as pd
 import os
 
-exampleDict = {"Trip Name": 'Aruba', "Trip Purpose": 'Personal',
-               "Nbr of Days": 5, "Nbr of Nights": 5,
-               "Daytime Temp": 'Warm', "Night Temp": 'Warm',
-               "Sunny": True, "Rain": False, "Snow": False,
-               "Swim": True, "Suit": False, "Nbr of Suits": 0,
-               "Go Out Night": False, "Nbr of go-out nights": 0,
-               "Shopping": True,
-               "DSLR": True,
-               "Transportation Mode": 'Flight',
-               "Flight Time": 3, "Drive Time": 0,
-               "International Trip": False}
+tripProfileDictExample =    {"Trip Name": 'Aruba', "Trip Purpose": 'Personal',
+                            "Nbr of Days": 5, "Nbr of Nights": 5,
+                            "Daytime Temp": 'Warm', "Night Temp": 'Warm',
+                            "Sunny": True, "Rain": False, "Snow": False,
+                            "Swim": True, "Suit": False, "Nbr of Suits": 0,
+                            "Go Out Night": False, "Nbr of go-out nights": 0,
+                            "Shopping": True,
+                            "DSLR": True,
+                            "Transportation Mode": 'Flight',
+                            "Flight Time": 3, "Drive Time": 0,
+                            "International Trip": False}
 
 
 def generatePackList(path, standardPackingListFile, standardPackListSheet, tripProfileDict):
-    """ This function generates a packing list by selecting items from the Standard Packing List based on the answers
+    """This function generates a packing list by selecting items from the Standard Packing List based on the answers
     to the questionnaire function (stored in a dictionary).
     Inputs: path to the standard packing list file,
             filename of the standard packing list (in csv format),
@@ -27,7 +27,7 @@ def generatePackList(path, standardPackingListFile, standardPackListSheet, tripP
     nbrDays = tripProfileDict['Nbr of Days']
     
     def selectTops(nbrDays, dayTemp, nightTemp, tripPurpose):
-        """ This function selects the quantity of shirts based on the number of days of the trip and the temperature.
+        """This function selects the quantity of shirts based on the number of days of the trip and the temperature.
         Criteria:
             Qty: 1 shirt for each day, up to 5 shirts max
             Temp: Warm/hot weather = short-sleeve shirt
@@ -39,11 +39,18 @@ def generatePackList(path, standardPackingListFile, standardPackListSheet, tripP
                  temp of top (short-sleeve shirt, long-sleeve shirt, sweater)
                  quantity of shirts
         Returns: a dictionary of the above items"""
-        
-        pass
+        tops = {'shirts': 0}
+        # Select number of shirts
+        # One shirt for each day up to five max
+        if nbrDays <= 5:
+            tops['shirts'] = nbrDays
+        else:
+            tops['shirts'] = 5
+
+        return tops
     
     def selectBottoms(tripPurpose, nbrDays, dayTemp, nightTemp):
-        """ This function selects the quantity of bottoms based on the number of days of the trip and the temperature.
+        """This function selects the quantity of bottoms based on the number of days of the trip and the temperature.
         Criteria:
             Qty: 1 bottom for every 2 days, up to 3 bottoms max
             Temp: Warm/hot weather = shorts
@@ -55,10 +62,27 @@ def generatePackList(path, standardPackingListFile, standardPackListSheet, tripP
                  temp of bottom (shorts, pants)
                  quantity of bottoms
         Returns: a dictionary of the above items"""
-        pass
+        # Select number of bottoms
+        # One pair of bottoms for every two days, up to 3 max
+        bottoms = {'shorts': 0, 'pants': 0}
+        if dayTemp.lower() == 'warm':
+            if nbrDays <= 5:
+                bottoms['shorts'] = (
+                (nbrDays // 2) + (nbrDays % 2)  # rounds up for odd nbr of days
+                )
+            else:
+                bottoms['shorts'] = 3
+        if dayTemp.lower() == 'cold':
+            if nbrDays <= 5:
+                bottoms['pants'] = (
+                (nbrDays // 2) + (nbrDays % 2)  # rounds up for odd nbr of days
+                )
+            else:
+                bottoms['pants'] = 3
+        return bottoms
     
     def selectUnderwear(nbrNights, tripPurpose, dayTemp, nightTemp):
-        """ This function selects the quantity and type of underwear based on the purpose of trip and the temperature.
+        """This function selects the quantity and type of underwear based on the purpose of trip and the temperature.
         Criteria:
             Qty: 1 pair underwear for each night up to 5 max, 1 undershirt for every 2 nights, 1 pair socks per 2 days
             Temp: hot weather       = undershirt
@@ -80,7 +104,7 @@ def generatePackList(path, standardPackingListFile, standardPackListSheet, tripP
         pass
     
     def selectOuterwear(tripPurpose, dayTemp, nightTemp):
-        """ This function selects the quantity and type of outerwear based on the purpose of trip and the temperature.
+        """This function selects the quantity and type of outerwear based on the purpose of trip and the temperature.
         Criteria:
             Qty: 1 coat if cold, 0 coats if war 1 jacket if cool or hot (due to AC), 0
             Temp: hot weather = indoor jacket (for air conditioning)
@@ -97,7 +121,7 @@ def generatePackList(path, standardPackingListFile, standardPackListSheet, tripP
         pass
     
     def selectLuggage(tripPurpose, nbrDays):
-        """ This function selects the primary, secondary, and packed bags based on the trip purpose and number of days of the trip.
+        """This function selects the primary, secondary, and packed bags based on the trip purpose and number of days of the trip.
         Criteria:
             Qty: 0-2 days = Antler bag
                  2-5 days = Tumi carry-on or Tumi garment bag
@@ -114,7 +138,7 @@ def generatePackList(path, standardPackingListFile, standardPackListSheet, tripP
         pass
     
     def selectActivityGear(suit, beach, go_out_night, swim, shopping):
-        """ This function selects the quantity and type of clothing for other trip activities based on whether or not those activities will occur.
+        """This function selects the quantity and type of clothing for other trip activities based on whether or not those activities will occur.
         Criteria:
             Qty: 
             Activity: suit required = suit or blazer, suit shirt, tie, dress shoes, trench coat?
@@ -132,18 +156,18 @@ def generatePackList(path, standardPackingListFile, standardPackListSheet, tripP
         pass
     
         def selectWeatherGear(sunny, rain, snow):
-        """ This function selects the quantity and type of items needed based on weather.
-        Criteria:
-            Qty: 
-            Weather: sunny = sunglasses, sunblock
-                     rain  = raincoat or umbrella
-                     snow  = boots, gloves
-        Inputs: sunny, rain, snow
-        Outputs: sunglasses, sunblock, raincoat, umbrella, boots, gloves
-                 quantity of above items
-        Returns: a dictionary of the above items"""
+            """This function selects the quantity and type of items needed based on weather.
+                Criteria:
+                Qty: 
+                Weather: sunny = sunglasses, sunblock
+                         rain  = raincoat or umbrella
+                         snow  = boots, gloves
+                Inputs: sunny, rain, snow
+                Outputs: sunglasses, sunblock, raincoat, umbrella, boots, gloves
+                         quantity of above items
+                Returns: a dictionary of the above items"""
         
-        pass
+            pass
     
     def selectCameraGear(dslr):
         """Select items related to my DSLR camera."""
@@ -166,34 +190,9 @@ def generatePackList(path, standardPackingListFile, standardPackListSheet, tripP
         pass
     
     
-    
-    # Select number of shirts
-    # One shirt for each day up to five max
-    if nbrDays <= 5:
-        dfpackingList.loc['shirts', 'Qty'] = nbrDays
-    else:
-        dfpackingList.loc['shirts', 'Qty'] = 5
-    
-    
-    
-    # Select number of bottoms
-    # One pair of bottoms for every two days, up to 3 max
-    
-    if tripProfileDict['Daytime Temp'].lower() == 'warm':
-        if nbrDays <= 5:
-            dfpackingList.loc['shorts', 'Qty'] = (
-            (nbrDays // 2) + (nbrDays % 2))  # rounds up for odd nbr of days
-        else:
-            dfpackingList.loc['shorts', 'Qty'] = 3
-    if tripProfileDict['Daytime Temp'].lower() == 'cold':
-        if nbrDays <= 5:
-            dfpackingList.loc['pants', 'Qty'] = (
-            (nbrDays // 2) + (nbrDays % 2))  # rounds up for odd nbr of days
-        else:
-            dfpackingList.loc['pants', 'Qty'] = 3
 
     def updateDataFrame():
-        """ This function retrieves the standard packing list and updates it based on the return values of the
+        """This function retrieves the standard packing list and updates it based on the return values of the
         select items set of functions. It then saves the new DataFrame to file with the trip name from
         the questionnaire function."""
         # Instantiate the standard packing list datafrome from csv file
@@ -207,17 +206,13 @@ def generatePackList(path, standardPackingListFile, standardPackListSheet, tripP
         # To update the dataframe values, use df.loc[index, column]
         
         # TODO - Export the packing list to csv, text file, Excel, or Evernote
-        def outputPackingList(tripName, generatedPackList):
-            packList = open(tripName + '.txt', 'w')
-            packing_list = pd.read_csv(generatedPackList)
-            packList.write('     Qty     Item\n')
-            packList.write('[ ]  ' + '     ' + packing_list.loc[1, 1] + '     ' + packing_list.loc[1, 2])
-    
-            pass
+        def outputPackingList(tripName, dfpackingList):
+            
+            # Save generated packing list as a new Excel file.
+            dfpackingList.to_excel(path + tripProfileDict['Trip Name'] + 'xlsx')
+            # dfpackingList.to_csv(path + tripProfileDict['Trip Name'] + '.csv')
 
-        # Save generated packing list as a new Excel file.
-        dfpackingList.to_excel(path + tripProfileDict['Trip Name'] + 'xlsx')
-        # dfpackingList.to_csv(path + tripProfileDict['Trip Name'] + '.csv')
+            pass
 
     pass
 
