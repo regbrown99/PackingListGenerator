@@ -54,7 +54,7 @@ def getWeather(zip_code, city, country):
     
     # *****START CODE FROM ATBS*****
     # Below code is from ATBS, but didn't work when I ran it on Cloud9, perhaps because I mistakenly ran it using python2
-    # w = weatherData['list']
+    # w = weatherData
     # print('Current weather in %s: ' % (zip_code))
     # print(w[0]['weather'][0]['main'], '-', w[0]['weather'][0]['description'])
     # print()
@@ -68,6 +68,7 @@ def getWeather(zip_code, city, country):
     # TODO: test ATBS code using python3 instead of 2
     
     # TODO: return weather data as a dictionary that can be passed to temperatureMapping
+    return weatherData
     
 def temperatureMapping(temperature):
         """This function takes a temperature and maps it to my own temperature description.
@@ -93,5 +94,5 @@ if __name__ == '__main__':
     zip_code = 77494
     city = 'Katy'
     country = 'us'
-    getWeather(zip_code, city, country)
-    
+    print('Returning weatherData variable...')
+    print(getWeather(zip_code, city, country))
