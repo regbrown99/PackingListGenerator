@@ -69,7 +69,49 @@ def getWeather(zip_code, city, country):
     
     # TODO: return weather data as a dictionary that can be passed to temperatureMapping
     return weatherData
+
+def getCurrentWeather(zip_code, city, country):
+    import json, requests
+    my_api_key = '5482b2a3705d25d98c10f9364b53caee'
+    zip_url = 'http://api.openweathermap.org/data/2.5/weather?zip=%s&APPID=%s' % (zip_code, my_api_key)
+    city_url = 'http://api.openweathermap.org/data/2.5/weather?q=%s&APPID=%s' % (city, my_api_key) 
+    city_country_url = 'http://api.openweathermap.org/data/2.5/weather?q=%s,%s&APPID=%s' % (city, country, my_api_key)
+
+    zip_response = requests.get(zip_url)
+    zip_response.raise_for_status()
+    zipCurrentWeatherData = json.loads(zip_response.text)
     
+    city_response = requests.get(city_url)
+    city_response.raise_for_status()
+    cityCurrentWeatherData = json.loads(city_response.text)
+    
+    city_country_response = requests.get(city_country_url)
+    city_country_response.raise_for_status()
+    cityCountryCurrentWeatherData = json.loads(city_country_response.text)
+    
+    return zipCurrentWeatherData, cityCurrentWeatherData, cityCountryCurrentWeatherData
+
+def getForecastWeather(zip_code, city, country):
+    import json, requests
+    my_api_key = '5482b2a3705d25d98c10f9364b53caee'
+    zip_url = 'http://api.openweathermap.org/data/2.5/forecast?zip=%s&APPID=%s' % (zip_code, my_api_key)
+    city_url = 'http://api.openweathermap.org/data/2.5/forecast?q=%s&APPID=%s' % (city, my_api_key)
+    city_country_url = 'http://api.openweathermap.org/data/2.5/forecast?q=%s,%s&APPID=%s' % (city, country, my_api_key)
+    
+    zip_response = requests.get(zip_url)
+    zip_response.raise_for_status()
+    zipWeatherForecastData = json.loads(zip_response.text)
+    
+    city_response = requests.get(city_url)
+    city_response.raise_for_status()
+    cityWeatherForecastData = json.loads(city_response.text)
+    
+    city_country_response = requests.get(city_country_url)
+    city_country_response.raise_for_status()
+    cityCountryWeatherForecastData = json.loads(city_country_response.text)
+    
+    return zipWeatherForecastData, cityWeatherForecastData, cityCountryWeatherForecastData
+
 def temperatureMapping(temperature):
         """This function takes a temperature and maps it to my own temperature description.
         Input: temperature
