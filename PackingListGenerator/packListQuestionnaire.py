@@ -5,8 +5,7 @@ def questionnaire():
     """ This function gathers initial info with questions
     and prints the output to the screen.
     Inputs: None
-    Outputs: a dictionary of values used to generate the packing list,
-            printout of trip summary to the screen"""
+    Outputs: all variables captured by the answers to the questions"""
 
     def str2bool(string):
         "This function translates an answer to a boolean value."
@@ -101,48 +100,120 @@ def questionnaire():
     intl_trip = input()
     intl_trip = str2bool(intl_trip)
 
-    # Print a trip summary to the screen
-    # This is optional
-    print('TRIP SUMMARY')
-    print('Trip Name: ' + tripname)
-    print('Trip Purpose: ' + purpose)
-    print('Number of Days: ' + nbr_days)
-    print('Number of Nights: ' + nbr_nights)
-    print('Daytime Temperature: ' + daytime_temp)
-    print('Night time Temperature: ' + night_temp)
-    print('Sunny? ' + str(sunny))
-    print('Rainy? ' + str(rain))
-    print('Snow? ' + str(snow))
-    print('Swim? ' + str(swim))
-    print('Suit? ' + str(suit))
-    print('Number of suits: ' + str(nbr_suits))
-    print('Go-out night(s)? ' + str(go_out_night))
-    print('How many go-out nights? ' + str(nbr_go_out_nights))
-    print('Shopping? ' + str(shopping))
-    print('Bring DSLR? ' + str(dslr))
-    print('Travel mode: ' + transport_mode)
-    print('Flight time: ' + str(flight_time))
-    print('Drive time: ' + str(drive_time))
-    print('International trip? ' + str(intl_trip))
-
+    
     # Return these values as a dictionary instead of a tuple because
     # a dictionary allows me to look up the values with a suitable keyword.
     # This is useful since I'm going to lose the variable names
     # when the function is returned.
-    return {"Trip Name": tripname, "Trip Purpose": purpose,
-            "Nbr of Days": nbr_days, "Nbr of Nights": nbr_nights,
-            "Daytime Temp": daytime_temp, "Night Temp": night_temp,
-            "Sunny": sunny, "Rain": rain, "Snow": snow,
-            "Swim": swim, "Suit": suit, "Nbr of Suits": nbr_suits,
-            "Go Out Night": go_out_night, "Nbr of go-out nights": nbr_go_out_nights,
-            "Shopping": shopping,
-            "DSLR": dslr,
-            "Transportation Mode": transport_mode,
-            "Flight Time": flight_time, "Drive Time": drive_time,
-            "International Trip": intl_trip}
+    
+    tripProfileDict = {"Trip Name": tripname, "Trip Purpose": purpose,
+                        "Nbr of Days": nbr_days, "Nbr of Nights": nbr_nights,
+                        "Daytime Temp": daytime_temp, "Night Temp": night_temp,
+                        "Sunny": sunny, "Rain": rain, "Snow": snow,
+                        "Swim": swim, "Suit": suit, "Nbr of Suits": nbr_suits,
+                        "Go Out Night": go_out_night, "Nbr of go-out nights": nbr_go_out_nights,
+                        "Shopping": shopping,
+                        "DSLR": dslr,
+                        "Transportation Mode": transport_mode,
+                        "Flight Time": flight_time, "Drive Time": drive_time,
+                        "International Trip": intl_trip}
+    
+    return tripProfileDict
+
+
+def tripSummaryToScreen(tripProfileDict):
+    """
+    This function prints a Trip Profile Summary to the screen.
+    Input: Trip Profile (as a dictionary)
+    Output: Prints a Trip Profile Summary to the screen
+    """
+    print('TRIP SUMMARY')
+    print('Trip Name: ' + tripProfileDict["Trip Name"])
+    print('Trip Purpose: ' + tripProfileDict["Trip Purpose"])
+    print('Number of Days: ' + tripProfileDict["Nbr of Days"])
+    print('Number of Nights: ' + tripProfileDict["Nbr of Nights"])
+    print('Daytime Temperature: ' + tripProfileDict["Daytime Temp"])
+    print('Night time Temperature: ' + tripProfileDict["Night Temp"])
+    print('Sunny? ' + str(tripProfileDict["Sunny"]))
+    print('Rainy? ' + str(tripProfileDict["Rain"]))
+    print('Snow? ' + str(tripProfileDict["Snow"]))
+    print('Swim? ' + str(tripProfileDict["Swim"]))
+    print('Suit? ' + str(tripProfileDict["Suit"]))
+    print('Number of suits: ' + str(tripProfileDict["Nbr of Suits"]))
+    print('Go-out night(s)? ' + str(tripProfileDict["Go Out Night"]))
+    print('How many go-out nights? ' + str(tripProfileDict["Nbr of go-out nights"]))
+    print('Shopping? ' + str(tripProfileDict["Shopping"]))
+    print('Bring DSLR? ' + str(tripProfileDict["DSLR"]))
+    print('Travel mode: ' + tripProfileDict["Transportation Mode"])
+    print('Flight time: ' + str(tripProfileDict["Flight Time"]))
+    print('Drive time: ' + str(tripProfileDict["Drive Time"]))
+    print('International trip? ' + str(tripProfileDict["International Trip"]))
+    
+    pass
+
+
+def tripSummaryToFile(tripProfileDict):
+    """
+    This function prints a Trip Profile Summary to a text file.
+    Input: Trip Profile Dictionary
+    Output: text file containing Trip Profile Summary
+    """
+    TripSummary = open('./outputs/' + tripProfileDict["Trip Name"] + '-TripSummary.txt', 'w')
+    
+    TripSummary.write('TRIP SUMMARY')
+    TripSummary.write('\n')
+    TripSummary.write('Trip Name: ' + tripProfileDict["Trip Name"])
+    TripSummary.write('\n')
+    TripSummary.write('Trip Purpose: ' + tripProfileDict["Trip Purpose"])
+    TripSummary.write('\n')
+    TripSummary.write('Number of Days: ' + tripProfileDict["Nbr of Days"])
+    TripSummary.write('\n')
+    TripSummary.write('Number of Nights: ' + tripProfileDict["Nbr of Nights"])
+    TripSummary.write('\n')
+    TripSummary.write('Daytime Temperature: ' + tripProfileDict["Daytime Temp"])
+    TripSummary.write('\n')
+    TripSummary.write('Night time Temperature: ' + tripProfileDict["Night Temp"])
+    TripSummary.write('\n')
+    TripSummary.write('Sunny? ' + str(tripProfileDict["Sunny"]))
+    TripSummary.write('\n')
+    TripSummary.write('Rainy? ' + str(tripProfileDict["Rain"]))
+    TripSummary.write('\n')
+    TripSummary.write('Snow? ' + str(tripProfileDict["Snow"]))
+    TripSummary.write('\n')
+    TripSummary.write('Swim? ' + str(tripProfileDict["Swim"]))
+    TripSummary.write('\n')
+    TripSummary.write('Suit? ' + str(tripProfileDict["Suit"]))
+    TripSummary.write('\n')
+    TripSummary.write('Number of suits: ' + str(tripProfileDict["Nbr of Suits"]))
+    TripSummary.write('\n')
+    TripSummary.write('Go-out night(s)? ' + str(tripProfileDict["Go Out Night"]))
+    TripSummary.write('\n')
+    TripSummary.write('How many go-out nights? ' + str(tripProfileDict["Nbr of go-out nights"]))
+    TripSummary.write('\n')
+    TripSummary.write('Shopping? ' + str(tripProfileDict["Shopping"]))
+    TripSummary.write('\n')
+    TripSummary.write('Bring DSLR? ' + str(tripProfileDict["DSLR"]))
+    TripSummary.write('\n')
+    TripSummary.write('Travel mode: ' + tripProfileDict["Transportation Mode"])
+    TripSummary.write('\n')
+    TripSummary.write('Flight time: ' + str(tripProfileDict["Flight Time"]))
+    TripSummary.write('\n')
+    TripSummary.write('Drive time: ' + str(tripProfileDict["Drive Time"]))
+    TripSummary.write('\n')
+    TripSummary.write('International trip? ' + str(tripProfileDict["International Trip"]))
+    TripSummary.write('\n')
+    
+    TripSummary.close()
+
+    pass
 
 if __name__ == '__main__':
     print('Executing as ' + __name__)
-    questionnaire()
-    print(questionnaire())
+    tripProfileDict = questionnaire()
+    
+    # Print the summary to screen
+    tripSummaryToScreen(tripProfileDict)
+    
+    # Save the summary to a file
+    tripSummaryToFile(tripProfileDict)
     
