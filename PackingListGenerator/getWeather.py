@@ -1,4 +1,4 @@
-#! python3
+#! /usr/bin/python3
 # getWeather.py - Prints the weather for a location from the command line.
 
 def getWeather(zip_code, city, country):
