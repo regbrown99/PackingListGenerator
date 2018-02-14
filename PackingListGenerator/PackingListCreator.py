@@ -12,8 +12,9 @@ import generatePackList
 
 # Store standard packing list file location in a variable so it can be changed if desired.
 # path = '/Users/RAB-Capital/Dropbox/111PackingLists/'
-path = '/home/ubuntu/workspace/python/PackingList'
-standardPackingListFile = 'StandardOneBagPackingList.csv'
+path = '/home/ubuntu/workspace/PackingListGenerator'
+standardPackingListFile = 'standardPackingList.xlsx'
+standardPackingListSheet = 'StandardPackingList'
 
 exampleDict = {"Trip Name": 'Aruba', "Trip Purpose": 'Personal',
             "Nbr of Days": 5, "Nbr of Nights": 5,
@@ -28,4 +29,4 @@ exampleDict = {"Trip Name": 'Aruba', "Trip Purpose": 'Personal',
             "International Trip": False}
 
 tripProfile = packListQuestionnaire.questionnaire()
-generatePackList.generatePackList(path, standardPackingListFile, tripProfile)
+generatePackList.generatePackList(path, standardPackingListFile, standardPackingListSheet, tripProfile)

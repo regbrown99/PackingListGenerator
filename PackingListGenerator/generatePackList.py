@@ -15,7 +15,7 @@ tripProfileDictExample =    {"Trip Name": 'Aruba', "Trip Purpose": 'Personal',
                             "International Trip": False}
 
 
-def generatePackList(path, standardPackingListFile, standardPackListSheet, tripProfileDict):
+def generatePackList(path, standardPackingListFile, standardPackingListSheet, tripProfileDict):
     """This function generates a packing list by selecting items from the Standard Packing List based on the answers
     to the questionnaire function (stored in a dictionary).
     Inputs: path to the standard packing list file,
@@ -30,34 +30,48 @@ def generatePackList(path, standardPackingListFile, standardPackListSheet, tripP
     night_temp = tripProfileDict['Night Temp']
     
     itemUpdateDict = {}
+    
     tops = selectTops(trip_purpose, nbr_days, day_temp, night_temp)
     itemUpdateDict.update(tops)
+    
     bottoms = selectBottoms(trip_purpose, nbr_days, day_temp, night_temp)
     itemUpdateDict.update(bottoms)
+    
     # underwear = selectUnderwear(trip_purpose, nbr_nights, day_temp, night_temp)
     # itemUpdateDict.update(underwear)
+    
     # shoes = selectShoes(tripPurpose)
+    # itemUpdateDict.update(shoes)
     
     # outer_wear = selectOuterwear(tripPurpose, dayTemp, nightTemp)
+    # itemUpdateDict.update(outer_wear)
     
     # luggage = selectLuggage(tripPurpose, nbrDays)
+    # itemUpdateDict.update(luggage)
     
     # activity_gear = selectActivityGear(suit, beach, go_out_night, swim, shopping)
+    # itemUpdateDict.update(activity_gear)
     
     # weather_gear = selectWeatherGear(sunny, rain, snow)
+    # itemUpdateDict.update(weather_gear)
     
     # camera_gear = selectCameraGear(dslr)
+    # itemUpdateDict.update(camera_gear)
     
     # travel_items = selectTravelItems(transportationMode, transportationTime, internationalDomestic)
+    # itemUpdateDict.update(travel_items)
     
     # toiletries = selectToiletries()
+    # itemUpdateDict.update(toiletries)
     
     # meds = selectMeds()
+    # itemUpdateDict.update(meds)
     
     # utility_items = selectUtilityItems()
+    # itemUpdateDict.update(utility_items)
     
     # papers_books = selectPapersandBooks()
-    
+    # itemUpdateDict.update(papers_books)
     
     # updateDataFrame()
     # outputPackingList(updateDataFrame())
@@ -229,12 +243,12 @@ def selectPapersandBooks():
     
     
 
-def updateDataFrame():
+def updateDataFrame(standardPackingListFile, standardPackingListSheet):
     """This function retrieves the standard packing list and updates it based on the return values of the
     select items set of functions. It then saves the new DataFrame to file with the trip name from
     the questionnaire function."""
     # Instantiate the standard packing list datafrome from csv file
-    dfpackingList = pd.read_excel(standardPackingListFile, sheet_name=standardPackListSheet)
+    dfpackingList = pd.read_excel(standardPackingListFile, sheet_name=standardPackingListSheet)
     # usecols=['Item', 'Qty', 'Completed'])
 
     # Set item names as index for the dataframe
